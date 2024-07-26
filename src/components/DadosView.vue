@@ -1,58 +1,61 @@
 <script setup>
-defineProps(['pessoa']);
+import { reactive } from 'vue'
+const props = defineProps({
+    dadosEdit: {
+        type: Object,
+        required: true
+    }
+})
+
+console.log(props.dadosEdit)
+
 </script>
-
 <template>
- <div class="resultado">
-      <h2>Resultado</h2>
-      <p>Nome: {{ pessoa.nome }}</p>
-      <p>Email: {{ pessoa.email }}</p>
-      <p>Senha: {{ pessoa.senha }}</p>
-      <p>Confirmar Senha: {{ pessoa.confsenha }}</p>
-      <p>Data de Nascimento: {{ pessoa.data }}</p>
-      <p>Rua: {{ pessoa.rua }}</p>
-      <p>Número: {{ pessoa.numero * 1 }}</p>
-      <p>Bairro: {{ pessoa.bairro }}</p>
-      <p>CEP: {{ pessoa.cep * 1 }}</p>
-      <p>Estado: {{ pessoa.estado }}</p>
-      <p>Hobbies: {{ pessoa.hobbies }}</p>
-      <p>Linguagens: {{ pessoa.linguas }}</p>
+    <div class="resultado">
+        <div class="mainResultados">
+            <h1>Resultado</h1>
+            <p>Nome: {{ props.dadosEdit.nome }}</p>
+            <p>Nascimento: {{ props.dadosEdit.nascimento }}</p>
+            <p>Email: {{ props.dadosEdit.email }}</p>
+            <p>Cidade: {{ props.dadosEdit.cidade }}</p>
+            <p>Estado: {{ props.dadosEdit.estado }}</p>
+            <p>Hobbies: {{ props.dadosEdit.hobbies }}</p>
+            <p>Linguagem Preferida: {{ props.dadosEdit.linguagemProg }}</p>
+            <div class="mainResultados">
+                <p> Biografia: {{ props.dadosEdit.biografia }}</p>
+            </div>
+        </div>
     </div>
-
 </template>
-
 <style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  box-sizing: border-box;
-}
 .resultado {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  background-color: #7289da;
-  width: 500px;
-  justify-content: center;
-  align-items: start;
-  animation: spin 2s ease;
-  animation-iteration-count: 1;
-  gap: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+    border-radius: 20px;
+    gap: 40px;
+    border: 1.5px solid #0d0d0d;
+    color: #0d0d0d;
+    animation: spin 2s ease;
+    animation-iteration-count: 1;
 }
 
+.resultado h1 {
+    font-size: 50px;
+    border-bottom: 1px solid #0d0d0d;
+    margin: 0 0 10px 0;
+}
 
 @keyframes spin {
-  to {
-    transform: scale(1) translate(0px) rotate(0deg) translateY(0);
-  }
+    to {
+        transform: scale(1) translate(0px) rotate(0deg) translateY(0);
+    }
 
-  from {
-    transform: scale(250) translate(2000px) rotate(720deg) translateY(1100px);
-  }
-}
-
-.resultado p {
-  font-size: 16px;
+    from {
+        transform: scale(250) translate(2000px) rotate(720deg) translateY(1100px);
+    }
 }
 </style>

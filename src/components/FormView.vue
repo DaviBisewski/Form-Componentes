@@ -1,246 +1,204 @@
 <script setup>
-import { computed, ref } from 'vue';
-defineProps({
-    dadosEdit: {
-        type: Object,
-        required: true
-    }
-})
+import { ref, computed, reactive } from 'vue'
+
+const emit = defineEmits(['salvar'])
+
+const perfil = reactive({
+    nome: '',
+    senha: '',
+    confSenha: '',
+    nascimento: '',
+    email: '',
+    cep: '',
+    cidade: '',
+    estado: '',
+    hobbies: [],
+    linguagemProg: '',
+    biografia: ''
+});
+
+const Estados = [
+    { uf: 'AC', nome: 'Acre' },
+    { uf: 'AL', nome: 'Alagoas' },
+    { uf: 'AP', nome: 'Amapá' },
+    { uf: 'AM', nome: 'Amazonas' },
+    { uf: 'BA', nome: 'Bahia' },
+    { uf: 'CE', nome: 'Ceará' },
+    { uf: 'DF', nome: 'Distrito Federal' },
+    { uf: 'ES', nome: 'Espírito Santo' },
+    { uf: 'GO', nome: 'Goiás' },
+    { uf: 'MA', nome: 'Maranhão' },
+    { uf: 'MT', nome: 'Mato Grosso' },
+    { uf: 'MS', nome: 'Mato Grosso do Sul' },
+    { uf: 'MG', nome: 'Minas Gerais' },
+    { uf: 'PA', nome: 'Pará' },
+    { uf: 'PB', nome: 'Paraíba' },
+    { uf: 'PR', nome: 'Paraná' },
+    { uf: 'PE', nome: 'Pernambuco' },
+    { uf: 'PI', nome: 'Piauí' },
+    { uf: 'RJ', nome: 'Rio de Janeiro' },
+    { uf: 'RN', nome: 'Rio Grande do Norte' },
+    { uf: 'RS', nome: 'Rio Grande do Sul' },
+    { uf: 'RO', nome: 'Rondônia' },
+    { uf: 'RR', nome: 'Roraima' },
+    { uf: 'SC', nome: 'Santa Catarina' },
+    { uf: 'SP', nome: 'São Paulo' },
+    { uf: 'SE', nome: 'Sergipe' },
+    { uf: 'TO', nome: 'Tocantins' }
+]
+const botao = ref(false)
 
 const nomeBotao = computed(() => {
     return botao.value ? 'Esconder' : 'Mostrar';
 });
-const botao = ref(false)
+
+function enviar(dados) {
+
+    emit('salvar', dados)
+}
 
 </script>
-
 <template>
-    <div class="container">
-        <div class="formulario">
-            <form @submit.prevent="mostrarResultado = !mostrarResultado">
-                <div class="title">
-                    <h1>Formulário</h1>
-                </div>
-                <div class="row">
-                    <input type="text" v-model="dadosEdit.nome" required placeholder="Nome:">
-                </div>
-                <div class="row">
-                    <input type="email" v-model="dadosEdit.email" placeholder="Email:">
-                </div>
-                <div class="row">
-                    <input type="password" v-model="dadosEdit.senha" placeholder="Senha:">
-                </div>
-                <div class="row">
-                    <input type="password" v-model="dadosEdit.confsenha" placeholder="Confirmar Senha:">
-                </div>
-                <div class="row">
-                    <input type="date" v-model="dadosEdit.data" placeholder="Data de Nascimento:">
-                </div>
-                <div class="row">
-                    <label for="">Endereço:</label>
-                </div>
-                <div class="row">
-                    <input type="text" v-model="dadosEdit.rua" placeholder="Rua">
-                </div>
-                <div class="row">
-                    <input type="text" v-model="dadosEdit.numero" placeholder="Número">
-                </div>
-                <div class="row">
-                    <input type="text" v-model="dadosEdit.bairro" placeholder="Bairro">
-                </div>
-                <div class="row">
-                    <input type="text" v-model="dadosEdit.cidade" placeholder="Cidade">
-                </div>
-                <div class="row">
-                    <input type="number" v-model="dadosEdit.cep" placeholder="Cep">
-                </div>
-                <div class="row">
-                    <label for="">Estados:</label>
-                    <select v-model="dadosEdit.estado">
-                        <option value="AC">ACRE</option>
-                        <option value="AL">ALAGOAS</option>
-                        <option value="AP">AMAPÁ</option>
-                        <option value="AM">AMAZONAS</option>
-                        <option value="BA">BAHIA</option>
-                        <option value="CE">CEARÁ</option>
-                        <option value="DF">DISTRITO FEDERAL</option>
-                        <option value="ES">ESPÍRITO SANTO</option>
-                        <option value="GO">GOIÁS</option>
-                        <option value="MA">MARANHÃO</option>
-                        <option value="MT">MATO GROSSO</option>
-                        <option value="MS">MATO GROSSO DO SUL</option>
-                        <option value="MG">MINAS GERAIS</option>
-                        <option value="PA">PÁRA</option>
-                        <option value="PB">PARAÍBA</option>
-                        <option value="PR">PARANÁ</option>
-                        <option value="PB">PERNAMBUCO</option>
-                        <option value="PI">PIAUÍ</option>
-                        <option value="RJ">RIO DE JANEIRO</option>
-                        <option value="RN">RIO GRANDE DO NORTE</option>
-                        <option value="RS">RIO GRANDE DO SUS</option>
-                        <option value="RO">RONDÔNIA</option>
-                        <option value="RR">RORAIMA</option>
-                        <option value="SC">SANTA CATARINA</option>
-                        <option value="SP">SÃO PAULO</option>
-                        <option value="SE">SERGIPE</option>
-                        <option value="TO">TOCANTINS</option>
-                    </select>
-                </div>
+    <main class="formulario">
+        <form @submit.prevent="">
+            <h1>Formulário</h1>
+            <div class="input">
+                <label for="nome">Nome</label>
+                <input type="text" v-model.trim="perfil.nome" placeholder="Digite seu nome" id="inputName" required />
+            </div>
+            <div class="input">
+                <label for="Email">Email</label>
+                <input id="Email" type="email" v-model.trim="perfil.email" placeholder="Digite seu email" required>
+            </div>
+            <div class="input">
+                <label for="Senha">Senha</label>
+                <input id="Senha" type="password" v-model.trim="perfil.senha" placeholder="Digite sua Senha" required>
+            </div>
+            <div class="input">
+                <label for="ConSenha">Confirmar Senha</label>
+                <input id="ConSenha" type="password" v-model.trim="perfil.confSenha" placeholder="Confirme sua Senha"
+                    required>
+            </div>
+            <div class="input">
+                <label for="nascimento">Nascimento</label>
+                <input id="nascimento" type="date" v-model="perfil.nascimento" placeholder="Digite sua Nascimento "
+                    required>
+            </div>
+            <div class="input">
+                <label for="cep">CEP</label>
+                <input id="cep" type="number" v-model="perfil.cep" placeholder="Digite seu CEP" required>
+            </div>
+            <div class="input">
+                <label for="inputCity">Cidade</label>
+                <input id="inputCity" type="text" v-model="perfil.cidade" placeholder="Digite sua Cidade" required>
+            </div>
+            <div class="input">
+                <label for="Estado">Estado</label>
 
-                <div class="row">
-                    <label for="">Linguagem de Programação</label>
-                    <div class="bglh">
-                        <div class="checkbox">
-                            <input type="radio" value="C++" v-model="dadosEdit.linguas" id="" />
-                            <p>C++</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="radio" value="Python" v-model="dadosEdit.linguas" id="" />
-                            <p>Python</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="radio" value="JavaScript" v-model="dadosEdit.linguas" id="" />
-                            <p>JavaScript</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="radio" value="Java" v-model="dadosEdit.linguas" id="" />
-                            <p>Java</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="">Hobbies favoritos</label>
-                    <div class="bglh">
-                        <div class="checkbox">
-                            <input type="checkbox" v-model="dadosEdit.hobbies" value="Música" id="" />
-                            <p>Musica</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="checkbox" v-model="dadosEdit.hobbies" value="Esportes" id="" />
-                            <p>Esportes</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="checkbox" v-model="dadosEdit.hobbies" value="Viagem" id="" />
-                            <p>Viagem</p>
-                        </div>
-                        <div class="checkbox">
-                            <input type="checkbox" v-model="dadosEdit.hobbies" value="Cozinha" id="" />
-                            <p>Cozinhar</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <input type="text" v-model="biografia" id="" placeholder="Biografia:" />
-                </div>
-                <div class="button">
-                    <button @click="botao = !botao">{{ nomeBotao }}</button>
-                </div>
-            </form>
-        </div>
-    </div>
+                <select id="Estado" value="Estado" v-model="perfil.estado" required>
+                    <option v-for="Estado of Estados" :key="Estado.uf" :value="Estado.uf">
+                        {{ Estado.nome }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <p class="titulo">Hobbies:</p>
+                <input type="checkbox" id="esportes" value="Esporte" v-model="perfil.hobbies">
+                <label for="esportes">Esportes</label>
+
+                <input type="checkbox" id="viagens" value="Viagens" v-model="perfil.hobbies">
+                <label for="viagens">Viagens</label>
+
+                <input type="checkbox" id="musicas" value="Música" v-model="perfil.hobbies">
+                <label for="musicas">Músicas</label>
+
+                <input type="checkbox" id="leitura" value="Leitura" v-model="perfil.hobbies">
+                <label for="leitura">Leitura</label>
+
+                <input type="checkbox" id="videogame" value="VIdeoGame" v-model="perfil.hobbies">
+                <label for="videogame">Video Game</label>
+            </div>
+            <div>
+                <p class="titulo">Linguagem preferida:</p>
+                <input type="radio" id="Js" value="JavaScript" v-model="perfil.linguagemProg">
+                <label for="Js">JavaScript</label>
+
+                <input type="radio" id="Java" value="Java" v-model="perfil.linguagemProg">
+                <label for="Java">Java</label>
+
+                <input type="radio" id="C" value="C" v-model="perfil.linguagemProg">
+                <label for="C">C</label>
+
+                <input type="radio" id="Py" value="Python" v-model="perfil.linguagemProg">
+                <label for="Py">Python</label>
+
+                <input type="radio" id="C#" value="C#" v-model="perfil.LinguagemProg">
+                <label for="C#">C#</label>
+            </div>
+            <div class="input">
+                <label for="bio">Biografia</label>
+                <textarea type="text" id="bio" placeholder="Sua Biografia" v-model="perfil.biografia"></textarea>
+            </div>
+            <div class="button">
+                <button @click="enviar(perfil)" type="submit">{{ nomeBotao }}</button>
+            </div>
+        </form>
+    </main>
 </template>
-
 <style scoped>
 * {
     padding: 0;
     margin: 0;
     border: 0;
     box-sizing: border-box;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    background-image: linear-gradient(to left, #1e2124, #282b30, #424549, #424549);
-}
-
-.formulario,
-.resultado {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .formulario {
-    background-color: #1e2124;
+    background-color: #0d0d0d;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-h1 {
+    padding: 50px;
+    border-radius: 20px;
     color: #fff;
 }
 
-.resultado {
-    background-color: #7289da;
-    width: 500px;
+form {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: start;
-    animation: spin 2s ease;
-    animation-iteration-count: 1;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 7px;
 }
 
-.formulario .row {
-    margin: 10px 0px;
+.formulario form h1 {
+    font-size: 50px;
+    border-bottom: 1px solid #fff;
+    margin: 0 0 10px 0;
+}
+
+.formulario form .input {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
-    text-align: center;
+    gap: 15px;
 }
 
-.formulario .row input {
-    padding: 10px;
-    border-radius: 0;
-    border: 2px solid transparent;
-    width: 100%;
+.formulario form .input input {
+    padding: 2.5px;
+    border-radius: 7px;
 }
 
-.formulario .row input:hover {
-    padding: 10px;
-    border-radius: 0;
-    border: 2px solid #7289da;
-}
-
-
-
-.checkbox {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 100px;
-}
-
-.bglh {
-    display: flex;
-}
-
-label {
-    font-size: 1.5rem;
-    color: #fff;
-}
-
-select {
-    padding: 10px;
-    color: #fff;
-}
-
-.title {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-p {
-    color: #fff;
-}
-
-.button {
+.formulario form .button {
     display: flex;
     justify-content: end;
     align-items: center;
+}
+
+.formulario form .button button {
+    padding: 5px;
+    border-radius: 10px;
 }
 </style>
