@@ -5,7 +5,7 @@ import DadosView from '@/components/DadosView.vue';
 
 const dados = ref('')
 
-function salvar(item) {
+function save(item) {
   console.log(item)
   dados.value = item
 }
@@ -18,10 +18,10 @@ const mostrarDados = computed(() => {
 
 <template>
   <div>
-    <FormView @salvar="salvar" />
+    <FormView @salvar="save" />
   </div>
   <div>
-    <DadosView v-if="mostrarDados" :dadosEdit="dados" />
+    <DadosView v-if="mostrarDados" :Dados="dados" />
   </div>
 </template>
 

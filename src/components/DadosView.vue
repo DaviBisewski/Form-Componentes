@@ -1,28 +1,28 @@
 <script setup>
 import { reactive } from 'vue'
 const props = defineProps({
-    dadosEdit: {
+    Dados: {
         type: Object,
         required: true
     }
 })
 
-console.log(props.dadosEdit)
+console.log(props.Dados)
 
 </script>
 <template>
     <div class="resultado">
         <div class="mainResultados">
             <h1>Resultado</h1>
-            <p>Nome: {{ props.dadosEdit.nome }}</p>
-            <p>Nascimento: {{ props.dadosEdit.nascimento }}</p>
-            <p>Email: {{ props.dadosEdit.email }}</p>
-            <p>Cidade: {{ props.dadosEdit.cidade }}</p>
-            <p>Estado: {{ props.dadosEdit.estado }}</p>
-            <p>Hobbies: {{ props.dadosEdit.hobbies }}</p>
-            <p>Linguagem Preferida: {{ props.dadosEdit.linguagemProg }}</p>
+            <p>Nome: {{ props.Dados.nome }}</p>
+            <p>Nascimento: {{ props.Dados.nascimento }}</p>
+            <p>Email: {{ props.Dados.email }}</p>
+            <p>Cidade: {{ props.Dados.cidade }}</p>
+            <p>Estado: {{ props.Dados.estado }}</p>
+            <p>Hobbies: {{ props.Dados.hobbies }}</p>
+            <p>Linguagem Preferida: {{ props.Dados.linguagemProg }}</p>
             <div class="mainResultados">
-                <p> Biografia: {{ props.dadosEdit.biografia }}</p>
+                <p> Biografia: {{ props.Dados.biografia }}</p>
             </div>
         </div>
     </div>
